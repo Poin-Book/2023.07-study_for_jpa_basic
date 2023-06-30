@@ -5,7 +5,7 @@
 > 해당 Repository는 스터디를 진행하면서 알게된 지식을 공유 및 정리하고,
 > 이해 안되는 부분을 질문하고 해결하는 공간입니다.
 >
-> 강의 내용에 대한 실습은 각자의 Repository에서 진행하며 관련 코드를 
+> 강의 내용에 대한 실습은 각자의 Repository에서 진행하며 관련 코드를
 > 공유하고 싶은 경우 markdown 문법을 활용 혹은 개인 Repository를 링크하는 식으로 진행합니다.
 
 ## 목표
@@ -72,10 +72,10 @@
 
 ## 스터디 규칙
 <!-- TODO: 스터디 규칙(깃 컨밴션) 작성 in wiki -->
-- 깃 컨밴션
+- [깃 컨밴션](https://github.com/luke0408/study_for_jpa_basic/wiki/Github-Convention)
   - 커밋 메시지 규칙
   - 브랜치 규칙
   - 이슈 규칙
   - markdown 작성 규칙
-- 미팅 수칙
+- [스터디 수칙](https://github.com/luke0408/study_for_jpa_basic/wiki/Study-Rule)
   - 스터디 불참, 지각 등 참여도 규칙
