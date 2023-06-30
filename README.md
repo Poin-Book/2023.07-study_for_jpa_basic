@@ -3,7 +3,8 @@
 [인프런] "자바 ORM 표준 JPA 프로그래밍 - 기본편" 스터디
 
 > 해당 Repository는 스터디를 진행하면서 알게된 지식을 공유 및 정리하고,
-> 이해 안되는 부분을 질문하고 해결하는 공간입니다. <br>
+> 이해 안되는 부분을 질문하고 해결하는 공간입니다.
+>
 > 강의 내용에 대한 실습은 각자의 Repository에서 진행하며 관련 코드를 
 > 공유하고 싶은 경우 markdown 문법을 활용 혹은 개인 Repository를 링크하는 식으로 진행합니다.
 
@@ -41,15 +42,14 @@
     - 섹션 11. 객체지향 쿼리 언어2 - 중급 문법
 
 ## 스터디 참가자
-> 인원: 6명
 
-<!-- TODO: 참가자 사진 넣기 -->
+> 인원: 6명
 
 <center>
 
-|||||||
+|![다나](https://github.com/luke0408/secondProject/assets/98688494/e19d81bf-8af2-4d7a-ac5b-c34654867fc0)|![럭키](https://github.com/luke0408/secondProject/assets/98688494/257502b6-db88-44cc-a1dc-2db098e6dc22)|![루카](https://github.com/luke0408/secondProject/assets/98688494/7ed09202-52b7-432a-b032-69694a023ce3)|![루키](https://github.com/luke0408/secondProject/assets/98688494/a2250f7d-091b-4683-93c9-72f3bd9c39c5)|![밀리](https://github.com/luke0408/secondProject/assets/98688494/2fc528a6-5e2e-445e-a21d-3bf7164c7f72)|![은현](https://github.com/luke0408/secondProject/assets/98688494/a75146ce-95c9-40a0-940f-7d72ca032d9e)|
 |:---:|:---:|:---:|:---:|:---:|:---:|
-|다나|럭키|루카|루키|밀리|은현|
+|[다나](https://github.com/joowojr)|[럭키](https://github.com/Hyunstone)|[루카](https://github.com/luke0408)|[루키](https://github.com/destiny3912)|[밀리](https://github.com/hw130)|[은현](https://github.com/asas6978)|
 
 </center>
 
