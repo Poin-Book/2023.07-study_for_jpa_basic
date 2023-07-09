@@ -122,12 +122,12 @@ emf.close();
 jpa.persist(member);
  
 // 2. 조회
-String memberId = "suhwan";
+String memberId = "150L";
 Member member = jpa.find(Member.class, memberId);
  
 // 3. 수정
 Member member = jpa.find(Member.class, memberId);
-member.setName("babo");
+member.setName("zzzz");
  
 // 4. 연관된 객체 조회
 Member member = jpa.find(Member.class, memberId);
@@ -148,7 +148,8 @@ Member member = jpa.find(Member.class, memberId);
 - 오류 없이 정상적으로 송금이 되었다면 정상적으로 실행이 끝났으므로 commit을 한다.
 -> 이렇게 송금 과정을 하나의 트랜잭션이라고 볼 수 있다.
 </div>
-</details>
+</details>  
+
 - 즉, 한 번 질의가 실행되면 질의가 모두 수행되거나 모두 수행되지 않는 직업수행의 논리적 단위  
 
 - JPA에서 모든 데이터를 변경하는 작업은 반드시 **트랜잭션 안에서** 작업해야된다.
@@ -157,7 +158,7 @@ Member member = jpa.find(Member.class, memberId);
   
 - JPA가 변경됐는지 여부는 트랜잭션 커밋 시점에 다 체크한다. 만약 변경됐으면 update쿼리를 날린다.
 
-**JPA의 모든 데이터 변경은 트랜잭션 안에서 실행**
+- **JPA의 모든 데이터 변경은 트랜잭션 안에서 실행**
 
 
 # JPA 사용 시 알아야할 점
