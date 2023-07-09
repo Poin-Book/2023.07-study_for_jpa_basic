@@ -22,13 +22,16 @@
     - Table 슈퍼타입 서브타입 관계
         - 자바 컬렉션에 저장하면 부모 타입으로 조회 후 다형성 활용
 2. 연관관계
-    - 객체는 참조를 사용 : member.getTeam()
-    - 테이블은 외래키를 사용 : JOIN ON M.TEAM_ID = T.TEAM_ID
-    - 객체를 테이블에 맞추어 모델링
+    - 객체는 참조를 사용 : **member.getTeam()**
+    - 테이블은 외래키를 사용 : **JOIN ON M.TEAM_ID = T.TEAM_ID**
     - 객체다운 모델링을 하게 되면 과정 복잡
         - SQL문 작성 - SQL 실행 - 객체 생성하여 DB에서 조회한 테이블 정보 입력 - 객체 생성하여 DB에서 조회한 참조 테이블 정보 입력 - 두 테이블 간의 관계 설정
     - 객체 모델링을 자바 컬렉션에 관리하면 훨씬 간단해진다.
-      <이미지>
+      ```java
+      list.add(member);
+      Member member = list.get(memberId);
+      Team team = member.getTeam();
+      ```
 3. 객체 그래프 탐색
    - 객체는 자유롭게 객체 그래프를 탐색할 수 있어야 한다.
    - 처음에 실행하는 SQL에 따라 탐색 범위가 결정되므로 엔티티에 대한 신뢰 문제가 생긴다.
