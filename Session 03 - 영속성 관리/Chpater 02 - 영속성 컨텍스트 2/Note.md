@@ -15,13 +15,12 @@
 
 ### 1. 1차 캐시
         
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a145b9da-6458-416a-84dd-f4802a1b81b9/Untitled.png)
+![image](https://github.com/luke0408/study_for_jpa_basic/assets/74547868/1380c436-321f-4e4f-990e-db9fe2a44a54)
         
-    ![select가 안날아간다!](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/319baef0-3246-482f-8e67-e605d9b1698c/Untitled.png)
-        
+![image](https://github.com/luke0408/study_for_jpa_basic/assets/74547868/13e0294b-1ef2-4330-b54e-97472ff3f24d)   
 - select가 안날아간다!
         
-        ```java
+    ```java
         //객체를 생성한 상태(비영속)
         Member member = new Member();
         member.setId(101L);
@@ -33,35 +32,36 @@
         System.out.println("====== AFTER ========");
         
         Member findMember = em.find(Member.class, 101L);
-        ```
+    ```
         
 - PK, member 객체 자체의 쌍으로 들어간다
 - 1차 캐시에서 조회
             
-        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/21d691c7-f8d1-4fed-996d-48f037e1e616/Untitled.png)
+    ![image](https://github.com/luke0408/study_for_jpa_basic/assets/74547868/1762c78c-fa41-4146-b537-40e48e2a671c)
             
 - DB에서 조회
             
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a434e560-848b-4838-8ec4-0cf17a3ca297/Untitled.png)
+    ![image](https://github.com/luke0408/study_for_jpa_basic/assets/74547868/e5eaf33c-55b0-47fe-a5e2-ad3378c00316)
             
     - 근데 막 그렇게 이 캐시가 크게 도움이 되진 않는다.
         - 왜? 영속성 컨택스트는 한명의 요청이 끝나면 날아가기 때문에
 - 동일성(identity) 보장
         
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/44372341-bb2b-482e-bb05-6276d9a3a32d/Untitled.png)
+    ![image](https://github.com/luke0408/study_for_jpa_basic/assets/74547868/36a2c138-9e2b-4e5e-a1fd-6b524b7d3e3b)
         
     - 1차 캐시로 반복 가능한 읽기 등급(REPETABLE READ)의 트랜잭션 격리 수준을 데이터베이스가 아닌 애플리케이션 차원에서 제공
 
   ### 2. 트랜잭션을 지원하는 쓰기 지연 (transactional write-behind)
     - 엔티티 등록
             
-        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8b3b5c5d-62ea-46c6-9dda-de6c2f980e39/Untitled.png)
+        ![image](https://github.com/luke0408/study_for_jpa_basic/assets/74547868/8d319050-5cb4-4698-a511-fcddc732cc9d)
             
-        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/fa13ad92-1495-4840-93a7-bbb4b9c38a7f/Untitled.png)
+        ![image](https://github.com/luke0408/study_for_jpa_basic/assets/74547868/84a0abe6-64ba-4ca9-8910-87f71cea6de9)
             
         - persist call시 쓰기지연 SQL 저장소(쿼리)와 1차 캐시(엔티티)에 저장한다.
             
-        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/54352d4d-1596-4947-a702-fd7e535a4655/Untitled.png)
+            ![image](https://github.com/luke0408/study_for_jpa_basic/assets/74547868/29a2e0ee-019c-4524-8644-2227e49ba552)
+
             
         ```java
         //객체를 생성한 상태(비영속)
@@ -96,11 +96,11 @@
     - 따라서 setter로 변경만 해주면 들어간다.
     - 커밋시 변경을 반영
         
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/07d72a30-92e2-4277-959e-ac304d89d94f/Untitled.png)
+        ![image](https://github.com/luke0408/study_for_jpa_basic/assets/74547868/36655a10-6217-4552-af32-8dbbe4ab1b10)
         
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5850b803-f1be-4ff8-9806-387f91c2d30a/Untitled.png)
+        ![image](https://github.com/luke0408/study_for_jpa_basic/assets/74547868/24b74039-7efa-4381-b438-2bb576613b92)
         
     - 엔티티 삭제
-  
+        ![image](https://github.com/luke0408/study_for_jpa_basic/assets/74547868/36720839-c737-4cc9-9fa3-de6b1cfbf041)
   ### 4. 정리 페이지(사진)
     https://pear-harp-86c.notion.site/f062a881414449dd96a4b42b8859d67f?pvs=4

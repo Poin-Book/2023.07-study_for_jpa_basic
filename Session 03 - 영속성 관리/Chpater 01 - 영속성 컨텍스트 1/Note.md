@@ -11,7 +11,7 @@
     - [4. 정리 페이지(사진)](#4-정리-페이지사진)
 ### 1. 엔티티 매니저 팩토리와 엔티티 매니저
     
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/299a3418-e80d-4ca0-98cb-03b2931bc437/Untitled.png)
+![image](https://github.com/luke0408/study_for_jpa_basic/assets/74547868/79f8a5b6-8710-4ad9-8f85-0c36f04c5fe5)
 
 
 ### 2. 영속성 컨텍스트
@@ -25,7 +25,7 @@
       - 따라서 눈에 안보임
   - 엔티티 메니저를 통해서 영속성 컨텍스트에 접근한다.
         
-        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/16ab1581-2fab-45a3-975f-bc9375024bd0/Untitled.png)
+    ![image](https://github.com/luke0408/study_for_jpa_basic/assets/74547868/07e5b656-42a2-471f-84e9-96d62da0fee3)
         
 ### 3. 엔티티의 생명주기
   - 비영속
@@ -81,9 +81,7 @@
         ```java
         em.remove(member);
         ```
-        
-    
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/24287126-9316-4066-8931-b9e1751851e1/Untitled.png)
+        ![image](https://github.com/luke0408/study_for_jpa_basic/assets/74547868/77a8ddfd-7396-4a43-a06d-bf85929e5dd1)
 
 ### 4. 정리 페이지(사진)
 https://pear-harp-86c.notion.site/f062a881414449dd96a4b42b8859d67f?pvs=4
