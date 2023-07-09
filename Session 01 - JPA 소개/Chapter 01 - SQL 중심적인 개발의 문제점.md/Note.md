@@ -27,7 +27,6 @@
     - 객체를 테이블에 맞추어 모델링
     - 객체다운 모델링을 하게 되면 과정 복잡
         - SQL문 작성 - SQL 실행 - 객체 생성하여 DB에서 조회한 테이블 정보 입력 - 객체 생성하여 DB에서 조회한 참조 테이블 정보 입력 - 두 테이블 간의 관계 설정
-     <이미지>
     - 객체 모델링을 자바 컬렉션에 관리하면 훨씬 간단해진다.
       <이미지>
 3. 객체 그래프 탐색
@@ -36,14 +35,35 @@
    - 하지만 모든 객체를 미리 로딩할 수는 없다. 너무 많은 쿼리가 나와 성능이 떨어짐
    - 상황에 따라 동일한 회원 조회 메소드를 여러벌 생성하는 방법이 있지만, 이또한 너무 많은 케이스가 나오기 때문에 복잡하다
    - 계층형 아키텍처 -> **진정한 의미의 계층 분할이 어렵다**
-5. 비교하기
-   <이미지>
-   - SQL 문으로 데이터를 얻을 시에 데이터는 같지만 다른 인스턴스를 가짐
-   - <이미지>
-   - 자바 컬렉션에서 조회
-   - 같은 인스턴스이다.
-     
-> 객체 지향적으로 모델링 할수록 매핑 작업만 늘어난다.
+4. 비교하기
+    ```java
+    String memberId = "100";
+    Member member1 = memberDAO.getMember(memberId);
+    Member member2 = memberDAO.getMember(memberId);
+    member1 == member2; //다르다.
+
+    class MemberDAO {
+        public Member getMember(String memberId) {
+        String sql = "SELECT * FROM MEMBER WHERE MEMBER_ID = ?";
+        ...
+        //JDBC API, SQL 실행
+        return new Member(...);
+            }
+    }
+    ```
+    - SQL 문으로 데이터를 얻을 시에 데이터는 같지만 다른 인스턴스를 가짐
+
+    
+    ```java
+    String memberId = "100";
+    Member member1 = list.get(memberId);
+    Member member2 = list.get(memberId);
+    member1 == member2; //같다.
+    ```
+   - 자바 컬렉션에서 조회, 같은 인스턴스이다.
+
+
+객체 지향적으로 모델링 할수록 매핑 작업만 늘어난다.
 ### 이러한 문제점을 해결하기 위해 객체를 자바 컬렉션에 저장 하듯이 DB에 저장할 수 있게 한 것이 JPA
 
      
