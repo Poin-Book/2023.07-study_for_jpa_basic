@@ -2,10 +2,10 @@
 > 작성자:밀리
 
 ## 목차
-[JPA 구동방식](JPA_구동방식)
-[JPA 엔티티 설계](JPA_엔티티_설계)
-[h2 database 연결하기](h2_database_연결하기)
-[EntityManagerFactory & EntitiyManager 생성하기](EntityManagerFactory_&_EntitiyManager_생성하기)
+[JPA 구동방식](JPA_구동방식)  
+[JPA 엔티티 설계](JPA_엔티티_설계)  
+[h2 database 연결하기](h2_database_연결하기)  
+[EntityManagerFactory & EntitiyManager 생성하기](EntityManagerFactory_&_EntitiyManager_생성하기)  
 
 ## JPA 구동방식
 1. JPA가 시작되면 Persistence 클래스로 시작한다. 
