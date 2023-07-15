@@ -21,7 +21,7 @@
 
 ---
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f0765f45-90e9-48ba-8812-c68cf764834f/Untitled.png)
+![image](https://github.com/luke0408/study_for_jpa_basic/assets/74547868/e5b40fdc-f27a-47e5-98c6-e54bc8fab857)
 
 - SpringBoot 기준 application.yml 같은 환경설정 파일에 저 속성이 들어가며
 - 강의 기준으로는 persistence.xml에 직접 세팅을 해주어야 한다.
@@ -60,8 +60,8 @@
 - 이름 명명 전략 → 기본 lower_snake_case
     - 암시적 → 기본
         
-        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4d94563d-3d8e-47c6-ba6b-0012d6e0f2df/Untitled.png)
+        ![image](https://github.com/luke0408/study_for_jpa_basic/assets/74547868/01e4956f-5119-457f-9780-e24de3767b00)
         
     - 명시적 → 클래스, 변수 이름 기준 생성
         
-        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f625803b-0652-4ad4-8bb7-c9c253d0aac9/Untitled.png)
+        ![image](https://github.com/luke0408/study_for_jpa_basic/assets/74547868/bb7bf6ee-49e1-4196-b5b7-6a1fa32c364a)
