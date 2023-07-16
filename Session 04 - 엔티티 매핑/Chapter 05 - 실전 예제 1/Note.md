@@ -94,8 +94,8 @@ N:M 관계는 관계를 가진 양쪽 엔티티 모두에서 1:N 관계를 가�
 ### 엔티티 설계와 매핑
 ---
 <img width="872" alt="스크린샷 2023-07-16 오전 11 31 14" src="https://github.com/luke0408/study_for_jpa_basic/assets/87763333/4e3d1b40-9732-43bb-8d7d-0c6a979ecbc4">  
-코드  
-Member  
+
+Member    
 
 ```@Entity
 @Getter
