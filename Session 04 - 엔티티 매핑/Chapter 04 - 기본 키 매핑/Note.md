@@ -55,6 +55,11 @@ private Long id;
 - AUTO_INCREMENT는 데이터베이스에 INSERT SQL을 실행한 이후에 ID 값을 알 수 있음
 - IDENTITY 전략은 `em.persist() 시점`에 즉시 INSERT SQL을 실행하고 DB에서 식별자를 조회
 
+**[IDENTITY 전략의 작동원리]**
+- IDENTITY 전략은 INSERT SQL을 실행한 이후에야 식별자를 구할 수 있음
+- 즉, Entity의 식별자를 알려면 `반드시 데이터베이스에 INSERT를 먼저 해야 함`
+- 따라서 IDENTITY 전략만 예외적으로 `EntityManager.persist()`를 호출하는 시점에 INSERT SQL을 DB에 전달하고, DB에서 식별자를 조회
+
 ex)
 ```java
 @Entity
@@ -85,6 +90,25 @@ public class Member {
 
 </center>
 
+**[SEQUENCE 전략의 작동원리]**
+- DB에 SEQUENCE를 만들고 시작값을 맞춰줘야 함
+  - initialValue = 1, allocationSize = 1 > 1, 2, 3, 4, 5, ...
+- SEQUENCE 전략은 `em.persist()` 시점에 먼저 DB 시퀀스를 사용해서 식별자를 조회
+- 그렇게 조회해온 식별자를 엔티티에 할당하고, 엔티티를 영속성 컨텍스트에 저장
+- 이후 트랜잭션 커밋 시점에 INSERT SQL 실행
+
+**[SEQUENCE 전략의 의문점]**
+- 위 방식대로 진행한다면 DB 시퀀스를 사용해서 식별자를 조회하고, 엔티티에 할당하고, 영속성 컨텍스트에 저장하는 과정에서 `데이터베이스와 2번 통신`하게 됨
+- 즉, `성능상 이슈`가 발생할 수 있음
+
+**[SEQUENCE 전략의 해결책]**
+- allocationSize를 적절한 크기로 설정 (기본값이 50인 이유)
+- DB에 시퀀스 값을 미리 증가시킴
+  - ex) allocationSize = 50 > 1, 51, 101, 151, 201, ...
+- 이후 `메모리에서만 시퀀스 값을 증가`시킴
+  - ex) 1, 2, 3, 4, 5, ... , 50
+- allocationSize 단위만큼 메모리에서 시퀀스 값을 증가시키다가, 트랜잭션 커밋 시점에 DB에 증가된 시퀀스 값을 전달
+
 ex)
 ```java
 @Entity
@@ -100,8 +124,6 @@ public class Member {
     private Long id;
 }
 ```
-
-**[SEQUENCE 전략과 초기화]**
 
 ### TABLE 전략
 
@@ -124,7 +146,7 @@ public class Member {
 |valueColumnName|시퀀스 값 컬럼명|next_val|
 |pkColumnValue|키로 사용할 값 이름|엔티티 이름|
 |initialValue|초기 값, 마지막으로 생성된 값이 기준이 됨|0|
-|allocationSize|시퀀스 한 번 호출에 증가하는 수 (성능 최적화에 이용)|50|
+|allocationSize|시퀀스 한 번 호출에 증가하는 수 (성능 최적화에 이용) <br> [SQUENCE 전략](#sequence-전략)의 해결책과 같은 방식|50|
 |catalog, schema|데이터베이스 catalog, schema의 이름||
 |uniqueConstraints(DDL)|유니크 제약 조건 지정||
 
@@ -133,8 +155,14 @@ public class Member {
 ex)
 ```java
 @Entity
+@TableGenerator(
+    name = "MEMBER_SEQ_GENERATOR",
+    table = "MY_SEQUENCES",
+    pkColumnValue = "MEMBER_SEQ", allocationSize = 1)
 public class Member {
-    @Id @GeneratedValue(strategy = GenerationType.TABLE)
+    @Id 
+    @GeneratedValue(strategy = GenerationType.TABLE,
+                    generator = "MEMBER_SEQ_GENERATOR")
     private Long id;
 }
 ```
@@ -158,7 +186,9 @@ public class Member {
 **[기본 키 제약 조건]**
 - null 아님 (not null)
 - 유일 (unique)
-- 변하면 안됨 (immutable)
+- `변하면 안됨 (immutable)`
 
 **[권장하는 식별자 전략]**
 - Long형 + 대체키 + 키 생성전략 사용
+  - Long형 : 10억이 넘어가도 오버플로우 발생하지 않음
+  - 대체키 : 비즈니스에 의존하지 않는다. ex) 시퀀스, 키 생성 테이블, UUID
