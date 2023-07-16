@@ -88,12 +88,14 @@ N:M 관계는 관계를 가진 양쪽 엔티티 모두에서 1:N 관계를 가�
 
 
 ### 테이블 설계
----
-<img width="872" alt="스크린샷 2023-07-16 오전 2 24 04" src="https://github.com/luke0408/study_for_jpa_basic/assets/87763333/60eedbc9-f83a-4cd3-b4dd-870683d7a684">  
+---  
+
+<img width="868" alt="스크린샷 2023-07-16 오후 3 24 28" src="https://github.com/luke0408/study_for_jpa_basic/assets/87763333/98e86e1b-8764-4b81-b10f-90bed9854523"> 
 
 
 ### 엔티티 설계와 매핑
----
+---  
+
 <img width="872" alt="스크린샷 2023-07-16 오전 11 31 14" src="https://github.com/luke0408/study_for_jpa_basic/assets/87763333/4e3d1b40-9732-43bb-8d7d-0c6a979ecbc4">  
 
 Member    
@@ -103,7 +105,7 @@ Member
 @Setter
 public class Member {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     @Column(name = "MEMBER_ID")
     private Long id;
 
@@ -121,7 +123,7 @@ Order
 @Setter
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     @Column(name = "ORDER_ID")
     private Long id;
 
@@ -132,6 +134,13 @@ public class Order {
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
+
+    //객체 지향 관점에서 설계
+    @ManyToOne
+    private Member member;
+
+    @OneToMany
+    private List<OrderItem> orderItem;
 }
 ```  
 Item  
@@ -141,7 +150,7 @@ Item
 @Setter
 public class Item {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     @Column(name = "ITEM_ID")
     private Long id;
 
@@ -156,7 +165,7 @@ OrderItem
 ```@Entity
 public class OrderItem {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     @Column(name = "ORDER_ITEM_ID")
     private Long id;
 
@@ -168,6 +177,13 @@ public class OrderItem {
 
     private int orderPrice;
     private int count;
+
+    // 객체 지향 관점에서 설계
+    @ManyToOne
+    private Order order;
+
+    @OneToMany
+    private Item item;
 }  
 ```  
 JpaMain  
@@ -214,8 +230,7 @@ Member member = em.find(Member.class, memberId);
 <details>
 <summary>UML이란?</summary>
 <div markdown="1">       
-> :프로그램 설계를 표현하기 위해 사용하는 표기법  
-> 요구분석, 시스템 설계, 시스템 구현 등 시스템 개발 과정에서 개발자간의 의사소통을 원활하게 하기 위해 표준화한 모델링 언어이다.  
+> :프로그램 설계를 표현하기 위해 사용하는 표기법으로 요구분석, 시스템 설계, 시스템 구현 등 시스템 개발 과정에서 개발자간의 의사소통을 원활하게 하기 위해 표준화한 모델링 언어이다.  
 </div>
 </details>  
 
