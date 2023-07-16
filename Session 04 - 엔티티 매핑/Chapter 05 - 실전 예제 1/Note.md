@@ -96,9 +96,8 @@ N:M 관계는 관계를 가진 양쪽 엔티티 모두에서 1:N 관계를 가�
 <img width="872" alt="스크린샷 2023-07-16 오전 11 31 14" src="https://github.com/luke0408/study_for_jpa_basic/assets/87763333/4e3d1b40-9732-43bb-8d7d-0c6a979ecbc4">  
 코드  
 Member  
-```  
 
-@Entity
+```@Entity
 @Getter
 @Setter
 public class Member {
@@ -111,15 +110,11 @@ public class Member {
     private String city;
     private String street;
     private String zipcode;
-}  
-
+}
 ```
+Order  
 
-Order
-
-```
-
-@Entity
+```@Entity
 @Table(name = "ORDERS") // order 예약어 때문
 @Getter
 @Setter
@@ -136,15 +131,11 @@ public class Order {
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
-}  
+}
+```  
+Item  
 
-```
-
-Item
-
-```
-
-@Entity
+```@Entity
 @Getter
 @Setter
 public class Item {
@@ -156,15 +147,12 @@ public class Item {
     private String name;
     private int price;
     private int stockQuantity;
-}  
-
+}
 ```
 
-OrderItem
+OrderItem  
 
-```
-
-@Entity
+```@Entity
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -180,14 +168,10 @@ public class OrderItem {
     private int orderPrice;
     private int count;
 }  
-
-```
-
-JpaMain
+```  
+JpaMain  
   
-```
-
-public class JpaMain {
+```public class JpaMain {
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpashop");
         EntityManager em = emf.createEntityManager();
@@ -207,28 +191,24 @@ public class JpaMain {
         emf.close();
 
     }
-}  
-
+}
 ```  
 
 
 ### 데이터 중심 설계 문제점
 ---
 - 객체 내부에 저장되는 데이터를 기반으로 시스템을 분할하는 방법  
-- 객체가 포함해야하는 데이터에 집중
+- 객체가 포함해야하는 데이터에 집중  
 
-```
-
-Order order = em.find(Order.class, 1L);
+```Order order = em.find(Order.class, 1L);
 Long memberId = order.getMemberId();
-Member member = em.find(Member.class, memberId);  
-
+Member member = em.find(Member.class, memberId);
 ```
 
 주문에서 멤버를 찾기 위해서는 위와 같은 방법으로 찾아야 한다.  
 그러나 위 방식은 테이블의 외래키를 객체에 그대로 가져와 객체 설계를 테이블 설계에 맞춘 방식이다.  
 그래서 객체 그래프 탐색이 불가능하고, 참조가 없으므로 UML도 잘못됐다.  
-즉, 객체지향스럽지 못한 설계 방식이다.
+즉, 객체지향스럽지 못한 설계 방식이다.  
 
 <details>
 <summary>UML이란?</summary>
@@ -240,16 +220,11 @@ Member member = em.find(Member.class, memberId);
 
 좀 더 객체지향적인 방법으로는 아래와 같이 구현할 수 있다.
 
+```Order order = em.find(Order.class, 1L);
+Member findMember = order.getMember();
 ```
 
-Order order = em.find(Order.class, 1L);
-Member findMember = order.getMember();  
-
-```
-
-```
-
-@Entity
+```@Entity
 @Table(name = "ORDERS")
 @Getter
 @Setter
@@ -257,7 +232,6 @@ public class Order {
 //...
     private Member member;
 //...
-}  
-
+}
 ```
 
