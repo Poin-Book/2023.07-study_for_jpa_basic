@@ -1,7 +1,7 @@
 # 객체와 테이블 매핑
 > 작성자: @asas6978
 
-## 목차
+## 목차 
 [@Entity](#Entity) <br>
 [@Table](#Table)
 
