@@ -13,7 +13,7 @@
 @Column(name="") //컬럼 매핑 
 @Enumerated(EnumType.STRING) //enum 타입 맵핑
 @Temporal(TemporalType.TIMESTAMP)
-@Lob //DB에 큰 컨텐츠를 넣고 싶을 떄  blob, clob 사용
+@Lob //DB에 큰 컨텐츠를 넣고 싶을 때 blob, clob 사용
 @Transient // 디비랑 신경쓰지 않고 메모리에서만 계산하기 위해서 사용하는 임시 데이터 해시 데이터
 ```
 
@@ -47,7 +47,7 @@ columnDefinition = "varchar(100) default ‘EMPTY'"
 
 **EnumType.ORDINAL**
 
-enum 순서를 데이터베이스에 저장하며 DB에 숫자로 들어갑니다. enum 변경 시 혼동을 일으킬 위험이 있어ORDINAL을 사용하지 않는 것을 권고.
+enum 순서를 데이터베이스에 저장하며 DB에 숫자로 들어갑니다. enum 변경 시 혼동을 일으킬 위험이 있어 ORDINAL을 사용하지 않는 것을 권고.
 
 **EnumType.STRING**
 
@@ -170,9 +170,9 @@ Instant 객체와 LocalDateTime 모두 systemUTC() 메서드를 쓰고 있기 �
 하지만, 글로벌 서비스를 런칭한다면 Instant 객체를 사용하는 것이 최선인 것 같습니다!
 
 https://jaimemin.tistory.com/1537</br>
-https://ryan-han.com/post/java/java-calendar-date/
-https://d2.naver.com/helloworld/645609
-https://java119.tistory.com/52
+https://ryan-han.com/post/java/java-calendar-date/</br>
+https://d2.naver.com/helloworld/645609</br>
+https://java119.tistory.com/52</br>
 https://dev.gmarket.com/49
 
 ## @Lob
@@ -201,11 +201,11 @@ LONG 타입의 데이터들은 순차적으로만 접근이 가능하지만 LOB 
 반대로 이미지가 개인용이어야 하는 경우 DB에 이미지를 저장하는 것이 이점이 있기에 생각해 볼 수 있는 방안이라고 합니다.
 
 https://stackoverflow.com/questions/5285857/when-is-using-mysql-blob-recommended</br>
-https://stackoverflow.com/questions/4654004/mysql-binary-storage-using-blob-vs-os-file-system-large-files-large-quantities
+https://stackoverflow.com/questions/4654004/mysql-binary-storage-using-blob-vs-os-file-system-large-files-large-quantities</br>
 https://stackoverflow.com/questions/1717264/should-i-use-mysql-blob-field-type
 
 ---
-lob 출처
-https://www.joinc.co.kr/w/Site/Database/Book/ProcPrograming/11.Large_Objects
-[https://sites.google.com/site/smcgbu/home/공부-이야기/향상된-객체-lob](https://sites.google.com/site/smcgbu/home/%EA%B3%B5%EB%B6%80-%EC%9D%B4%EC%95%BC%EA%B8%B0/%ED%96%A5%EC%83%81%EB%90%9C-%EA%B0%9D%EC%B2%B4-lob)
+lob 출처</br>
+https://www.joinc.co.kr/w/Site/Database/Book/ProcPrograming/11.Large_Objects</br>
+[https://sites.google.com/site/smcgbu/home/공부-이야기/향상된-객체-lob](https://sites.google.com/site/smcgbu/home/%EA%B3%B5%EB%B6%80-%EC%9D%B4%EC%95%BC%EA%B8%B0/%ED%96%A5%EC%83%81%EB%90%9C-%EA%B0%9D%EC%B2%B4-lob)<br>
 http://www.gurubee.net/lecture/2768
