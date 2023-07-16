@@ -72,7 +72,7 @@ N:M 관계는 관계를 가진 양쪽 엔티티 모두에서 1:N 관계를 가�
 </details>  
 
 
-## 엔티티, 테이블 차이점  
+### 엔티티, 테이블 차이점  
 ---
 - 엔티티와 테이블은 데이터베이스에서 사용되는 용어이다.  
 > 엔티티 (Entity): 데이터베이스에서 특정한 사물이나 개념을 나타낸다.  
@@ -83,7 +83,7 @@ N:M 관계는 관계를 가진 양쪽 엔티티 모두에서 1:N 관계를 가�
 - 테이블은 특정한 엔티티를 나타내며, 각 열은 해당 엔티티의 속성을 나타낸다. 예를 들어, 사용자 테이블은 이름, 나이, 이메일과 같은 열을 가질 수 있다.  
 - 테이블은 데이터를 구조화하고 저장하는 데 사용되며, 관계형 데이터베이스에서 일반적으로 사용된다.
 
-**즉, 엔티티는 특정한 사물이나 개념을 나타내는 개념적인 개체이고, 테이블은 데이터베이스에서 실제로 정보를 저장하는 구조이다.**
+**즉, 엔티티는 특정한 사물이나 개념을 나타내는 개념적인 개체이고, 테이블은 데이터베이스에서 실제로 정보를 저장하는 구조이다.**  
 
 
 ### 테이블 설계
@@ -91,12 +91,13 @@ N:M 관계는 관계를 가진 양쪽 엔티티 모두에서 1:N 관계를 가�
 <img width="872" alt="스크린샷 2023-07-16 오전 2 24 04" src="https://github.com/luke0408/study_for_jpa_basic/assets/87763333/60eedbc9-f83a-4cd3-b4dd-870683d7a684">  
 
 
-## 엔티티 설계와 매핑
+### 엔티티 설계와 매핑
 ---
 <img width="872" alt="스크린샷 2023-07-16 오전 11 31 14" src="https://github.com/luke0408/study_for_jpa_basic/assets/87763333/4e3d1b40-9732-43bb-8d7d-0c6a979ecbc4">  
 코드  
 Member  
-```
+```  
+
 @Entity
 @Getter
 @Setter
@@ -110,10 +111,14 @@ public class Member {
     private String city;
     private String street;
     private String zipcode;
-}
+}  
+
 ```
+
 Order
+
 ```
+
 @Entity
 @Table(name = "ORDERS") // order 예약어 때문
 @Getter
@@ -131,10 +136,14 @@ public class Order {
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
-}
+}  
+
 ```
+
 Item
+
 ```
+
 @Entity
 @Getter
 @Setter
@@ -147,10 +156,14 @@ public class Item {
     private String name;
     private int price;
     private int stockQuantity;
-}
+}  
+
 ```
+
 OrderItem
+
 ```
+
 @Entity
 public class OrderItem {
     @Id
@@ -166,10 +179,14 @@ public class OrderItem {
 
     private int orderPrice;
     private int count;
-}
-```  
-JpaMain
+}  
+
 ```
+
+JpaMain
+  
+```
+
 public class JpaMain {
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpashop");
@@ -190,23 +207,29 @@ public class JpaMain {
         emf.close();
 
     }
-}
+}  
+
 ```  
 
 
 ### 데이터 중심 설계 문제점
 ---
 - 객체 내부에 저장되는 데이터를 기반으로 시스템을 분할하는 방법  
-- 객체가 포함해야하는 데이터에 집중  
+- 객체가 포함해야하는 데이터에 집중
+
 ```
+
 Order order = em.find(Order.class, 1L);
 Long memberId = order.getMemberId();
-Member member = em.find(Member.class, memberId);
-```  
+Member member = em.find(Member.class, memberId);  
+
+```
+
 주문에서 멤버를 찾기 위해서는 위와 같은 방법으로 찾아야 한다.  
 그러나 위 방식은 테이블의 외래키를 객체에 그대로 가져와 객체 설계를 테이블 설계에 맞춘 방식이다.  
 그래서 객체 그래프 탐색이 불가능하고, 참조가 없으므로 UML도 잘못됐다.  
 즉, 객체지향스럽지 못한 설계 방식이다.
+
 <details>
 <summary>UML이란?</summary>
 <div markdown="1">       
@@ -216,11 +239,16 @@ Member member = em.find(Member.class, memberId);
 </details>  
 
 좀 더 객체지향적인 방법으로는 아래와 같이 구현할 수 있다.
+
 ```
+
 Order order = em.find(Order.class, 1L);
-Member findMember = order.getMember();
+Member findMember = order.getMember();  
+
 ```
+
 ```
+
 @Entity
 @Table(name = "ORDERS")
 @Getter
@@ -229,5 +257,7 @@ public class Order {
 //...
     private Member member;
 //...
-}
+}  
+
 ```
+
