@@ -20,7 +20,7 @@
 
 <center>
 
-|![다나](https://github.com/luke0408/secondProject/assets/98688494/e19d81bf-8af2-4d7a-ac5b-c34654867fc0)|![럭키](https://github.com/luke0408/secondProject/assets/98688494/257502b6-db88-44cc-a1dc-2db098e6dc22)|![루카](https://github.com/luke0408/secondProject/assets/98688494/7ed09202-52b7-432a-b032-69694a023ce3)|![루키](https://github.com/luke0408/secondProject/assets/98688494/a2250f7d-091b-4683-93c9-72f3bd9c39c5)|![밀리](https://github.com/luke0408/secondProject/assets/98688494/2fc528a6-5e2e-445e-a21d-3bf7164c7f72)|![은현](https://github.com/luke0408/secondProject/assets/98688494/a75146ce-95c9-40a0-940f-7d72ca032d9e)|
+|![다나](https://avatars.githubusercontent.com/u/85955988?v=4)|![럭키](https://avatars.githubusercontent.com/u/110045522?v=4)|![루카](https://avatars.githubusercontent.com/u/98688494?v=4)|![루키](https://avatars.githubusercontent.com/u/74547868?v=4)|![밀리](https://avatars.githubusercontent.com/u/87763333?v=4)|![은현](https://avatars.githubusercontent.com/u/77332981?v=4)|
 |:---:|:---:|:---:|:---:|:---:|:---:|
 |[다나](https://github.com/joowojr)|[럭키](https://github.com/Hyunstone)|[루카](https://github.com/luke0408)|[루키](https://github.com/destiny3912)|[밀리](https://github.com/hw130)|[은현](https://github.com/asas6978)|
 
