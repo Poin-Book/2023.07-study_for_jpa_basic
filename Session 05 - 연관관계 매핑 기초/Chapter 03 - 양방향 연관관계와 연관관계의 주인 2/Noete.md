@@ -32,25 +32,28 @@ em.persist(member);
 
 
 - 순수한 객체 관계를 고려하면 항상 양쪽 다 값을 입력해야 한다.
+    - flush와 clear을 해주어야 제대로 조회된다.
     - 영속성 컨텍스트를 초기화 하지않으면 1차 캐시에 들어 있는 것이 조회돼서 반환됨
-    - 값이 세팅되지 않은 상태에서 1차 캐시에 들어가 값을 찾을 수 없고 select 쿼리 자체도 날아가지 않는다.
+    
 ```java
-Team team = new Team();                       
-team.setName("TeamA");                        
-em.persist(team);                             
-                                                          
-Member member = new Member();                 
-member.setUsername("member1");
-//MANY 값 설정
-member.setTeam(team);                         
-em.persist(member);                           
-                                                          
-//양방향 설정을 위해 ONE 쪽에도 값 설정                     
-team.getMembers().add(member);                
-                                                          
-//초기화해서 보고 싶은 경우                           
-em.flush();                                   
-em.clear();                                   
+Team team = new Team();
+team.setName("TeamA");
+em.persist(team);
+
+Member member = new Member();
+member.setName("Member1");
+member.setTeam(team);
+em.persist(member);
+
+team.getMembers().add(member);
+
+em.flush();
+em.clear();
+
+Team findTeam = em.find(Team.class, team.getId());
+List<Member> members = findTeam.getMembers();
+
+tx.commit();                                  
 ```
 
 
