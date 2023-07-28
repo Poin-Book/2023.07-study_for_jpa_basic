@@ -173,7 +173,6 @@
         private List<Item> items = new ArrayList<>();
     }
     ```
-    
 6. SQL
     
     ![image](https://github.com/luke0408/study_for_jpa_basic/assets/74547868/b6ac45a5-a639-48b2-af12-97589adcca50)
