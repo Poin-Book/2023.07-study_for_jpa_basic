@@ -53,18 +53,19 @@
           1.member 조회 쿼리
             ( team이 필요할 때 team 조회 쿼리 )
     -  Member의 수가 수천명, 수만명으로 가면 성능에 큰 영향을 미치개 된다.
-
-## 즉시 로딩이 필요하다면
-> 일단 모든 로딩을 지연 로딩으로 설정하고, 즉시 로딩을 원하는 테이블만 아래와 같이 join fetch 사용
-```sql
-select m from Member m join fetch m.team
-```
 - @ManyToOne, @OneToOne은 기본이 즉시 로딩이기 때문에, LAZY로 설정해줘야함
 ![image](https://github.com/luke0408/study_for_jpa_basic/assets/85955988/87db6cd1-ebd6-47f6-92e3-fcea9c633cdf)
 
-- @OneToMany, @ManyToMany는 기본이 지연 로딩
+- @OneToMany, @ManyToMany는 기본이 지연 로딩이다.
 
-## 3. 지연 로딩 활용 - 실무
+## 즉시 로딩이 필요하다면
+- 일단 모든 로딩을 지연 로딩으로 설정하고, 즉시 로딩을 원하는 테이블만 아래와 같이 join fetch 사용
+```sql
+select m from Member m join fetch m.team
+```
+- 또는 @EntityGraph 어노테이션 사용 → 추후 다룰 예정
+
+## 3. 지연 로딩 활용 
 - ❗️모든 연관관계에 지연 로딩을 사용해라 ❗️
 - ❗️ 실무에서 즉시 로딩을 사용하지 마라 ❗️
 - JPQL fetch 조인이나, 엔티티 그래프 기능을 사용해라 
