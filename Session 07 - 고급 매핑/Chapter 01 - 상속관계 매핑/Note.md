@@ -58,7 +58,7 @@
   
 #### 예제코드
   
-    ```
+```  
     @Entity
     @Inheritance(strategy = InheritanceType.JOINED)
     @DiscriminatorColumn(name = "DTYPE")
@@ -67,10 +67,9 @@
         @GeneratedValue @Id
         private Long id;  
         ...
+```  
     
-    ```
-    
-    ```  
+```  
     @Entity
     @DiscriminatorValue("M")
     public class Movie extends Item {
@@ -78,8 +77,7 @@
         private String actor;
 
         ...
-    
-    ```  
+```  
     
 - @Inheritance(strategy = InheritanceType.JOINED)  
     - 부모 클래스에 지정. 조인 전략이므로 InheritanceType.JOINED 설정  
@@ -91,8 +89,7 @@
     - 어노테이션을 선언하지 않을 경우 기본값으로 클래스 이름이 들어간다.  
         
 #### 실제 실행된 DDL  
-
-    ```  
+```  
     Hibernate:
    create table Album (
       artist varchar(255),
@@ -122,7 +119,6 @@
         primary key (id)
     )
     
-    
     Hibernate:
     alter table Album
         add constraint FKcve1ph6vw9ihye8rbk26h5jm9
@@ -137,9 +133,8 @@
     alter table Movie
         add constraint FK5sq6d5agrc34ithpdfs0umo9g
         foreign key (id)
-        references Item
-    
-    ```  
+        references Item 
+```  
 
 - 테이블 4개 생성  
 
@@ -149,7 +144,7 @@
       
 #### 만약 Movie 객체를 저장하면?  
 
-    ```  
+```  
     Movie movie = new Movie();
     movie.setDirector("감독A");
     movie.setActor("배우B");
@@ -160,10 +155,9 @@
     ​
     tx.commit();  
 
-    ```  
+```  
       
-
-    ```  
+```  
     Hibernate:
     /* insert advancedmapping.Movie
         */ insert
@@ -181,7 +175,7 @@
         values
             (?, ?, ?)  
 
-    ```
+```
     
 - Insert 쿼리가 두개 나간다.  
 
@@ -191,7 +185,7 @@
       
 #### Movie 객체를 조회하면?  
 
-    ```  
+```  
     Movie movie = new Movie();
     movie.setDirector("감독A");
     movie.setActor("배우B");
@@ -202,9 +196,9 @@
     ​
     tx.commit();  
 
-    ```  
+```  
 
-    ```  
+```  
     Hibernate:
     /* insert advancedmapping.Movie
        */ insert
@@ -222,12 +216,12 @@
         values
             (?, ?, ?)  
 
-    ```  
+```  
 
 
 - flush(), clear() 해주면, DB에 insert쿼리 날리고, 1차 캐시 지우므로 find에서 SELECT 쿼리가 나간다.  
+- Item과 inner join을 통해서 결과를 조회한다.
 
-- Item과 inner join을 통해서 결과를 조회한다. 
 - 장점  
     - 테이블의 정규화  
     - 외래 키 참조 무결성 제약조건 활용 가능  
