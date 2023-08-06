@@ -220,4 +220,4 @@ Hibernate.initialize(member); // 강제 초기화
 
 ### 상속관계에서 프록시를 사용할때 주의점은 없는가?
 
-[(3) 프록시 심화 주제](https://www.nowwatersblog.com/jpa/ch15/15-3#%ED%95%B4%EA%B2%B0%EB%B0%A9%EB%B2%951:jpql%EB%A1%9C%EB%8C%80%EC%83%81%EC%A7%81%EC%A0%91%EC%A1%B0%ED%9A%8C)
+[(3) 프록시 심화 주제](https://www.nowwatersblog.com/jpa/ch15/15-3)
