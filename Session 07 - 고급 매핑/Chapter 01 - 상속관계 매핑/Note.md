@@ -194,27 +194,30 @@
     ​
     em.persist(movie);
     ​
-    tx.commit();  
+    em.flush();
+    em.clear();  //DB에 insert쿼리 날리고, 1차 캐시 지우므로 find에서 SELECT 쿼리가 나간다.
+    ​
+    em.find(Movie.class, movie.getId());
+    ​
+    tx.commit();
 
 ```  
 
 ```  
     Hibernate:
-    /* insert advancedmapping.Movie
-       */ insert
-       into
-          Item
-          (id, name, price, DTYPE)
-       values
-          (null, ?, ?, 'Movie')
-    Hibernate:
-    /* insert advancedmapping.Movie
-        */ insert
-        into
-            Movie
-            (actor, director, id)
-        values
-            (?, ?, ?)  
+      select
+          movie0_.id as id2_2_0_,
+          movie0_1_.name as name3_2_0_,
+          movie0_1_.price as price4_2_0_,
+          movie0_.actor as actor1_3_0_,
+          movie0_.director as director2_3_0_
+      from
+          Movie movie0_
+      inner join
+          Item movie0_1_
+              on movie0_.id=movie0_1_.id
+      where
+          movie0_.id=?
 
 ```  
 
