@@ -40,11 +40,15 @@ member2.getHomeAddress().setCity("newCity");
 ```
 
 <img width="609" alt="스크린샷 2023-08-12 오후 11 18 18" src="https://github.com/hw130/Algorithm_practice/assets/87763333/99e19e84-5b77-4ea6-b789-082de6a84fc3">  
+
 업데이트가 2번 나가고  
+
 <img width="711" alt="스크린샷 2023-08-12 오후 11 18 58" src="https://github.com/luke0408/study_for_jpa_basic/assets/87763333/59e7da6c-4ea2-45e1-93ad-9d4a507aceca">  
+
 이 경우 member2의 주소를 “NewCity”로 변경하길 원했지만, member1의 주소도 같이 변경된다.  
 - 영속성 컨텍스트에서는 회원1과 회원2 둘 다 city 속성이 변경된 것으로 판단하여 각각 UPDATE SQL을 실행  
-이처럼 공유 참조로 인해 발생하는 문제는 찾아내기가 어렵다. 이 경우 값을 복사해서 사용해야 한다.  
+이처럼 공유 참조로 인해 발생하는 문제는 찾아내기가 어렵다. 이 경우 값을 복사해서 사용해야 한다.
+
 
 ### 값 타입 복사  
 ---
