@@ -5,13 +5,14 @@
 - [프로젝션](#프로젝션)
 - [엔티티 타입 프로젝션](#엔티티-타입-프로젝션)
 - [임베디드 타입 프로젝션](#임베디드-타입-프로젝션)
-- [스칼라 타입 프로젝션](#스칼라-타입-프로젝션)
-- [DISTINCT로 중복 제거](#DISTINCT로-중복-제거)
+- [스칼라 타입 프로젝션](#스칼라-타입-프로젝션)  
 
 ### 프로젝션  
 ---
-프로젝션이란, SELECT 절에서 조회할 대상을 정하는 것을 의미한다.  
-SELECT 절에서 조회할 수 있는 대상은 크게 3가지로 분류할 수 있다.  
+- 프로젝션이란, SELECT 절에서 조회할 대상을 정하는 것을 의미한다.  
+- SELECT 절에서 조회할 수 있는 대상은 크게 3가지로 분류할 수 있다.  
+- 참고로 DISTINCT로 다음과 같이 중복 제거가 가능하다.
+```em.createQuery("select distinct m.username, m.age from Member m").getResultList();```  
 
 ### 엔티티 타입 프로젝션  
 ---
@@ -28,8 +29,39 @@ Member 조회 시
 <img width="334" alt="스크린샷 2023-08-20 오후 5 08 27" src="https://github.com/luke0408/study_for_jpa_basic/assets/87763333/48c7953a-e3f8-4506-b8bc-8ce5c5b7731b">  
 Member에 대한 객체 그래프 탐색 Team 조회 시  
 <img width="320" alt="스크린샷 2023-08-20 오후 5 08 57" src="https://github.com/luke0408/study_for_jpa_basic/assets/87763333/5ae734a6-dbd9-47b1-a778-470adfcb1964">  
-Member와 Team간에 다대일 관계를 맺었기 때문에 Member는 Team을 참조하고 있고 따라서 Member -> Team으로 객체 그래프 조회를 할 수 있다.  
-가장 중요한 사실은 **조회한 엔티티는 영속성 컨텍스트의 관리 대상** 이라는 점이다.  
+- Member와 Team간에 다대일 관계를 맺었기 때문에 Member는 Team을 참조하고 있고 따라서 Member -> Team으로 객체 그래프 조회를 할 수 있다.  
+- 가장 중요한 사실은 **조회한 엔티티는 영속성 컨텍스트의 관리 대상** 이라는 점이다.  
+- 반환타입이 엔티티 컬랙션 타입인경우 컬렉션안에 엔티티들이 모두 영속성 컨택스트 안에서 관리된다.
+
+```
+Member member = new Member("user1" , 20);
+em.persist(member);
+
+em.flush();
+em.clear();
+
+List<Member> result = em.createQuery("select m from Member m where m.username = :username ", Member.class)
+                    .setParameter("username", member.getUsername())
+                    .getResultList();
+
+result.get(0).setAge(20);
+```
+
+- result 안에 Member는 모두 영속성 컨텍스트 에서 관리된다.
+- 참고로 join을 사용하는 경우에는 jpql에도 sql과 같이 조인문을 써주는 것이 좋다. 그래야 명시적으로 조인이 나가는 쿼리구나 이해 할 수 있다.
+
+
+```
+//이렇게만해도 sql 은 조인문으로 나가지만
+List<Member> result1 = em.createQuery("select m.team from Member m ", Member.class)
+						.getResultList();
+                        
+//명시적으로 조인문이 들어가는 쿼리라는 것을 알려주는 것이 좋다
+List<Member> result2 = em.createQuery("select t from Member m join m.team t ", Member.class)       
+						.getResultList();
+```
+
+
 
 ### 임베디드 타입 프로젝션  
 ---
@@ -42,11 +74,13 @@ Member와 Team간에 다대일 관계를 맺었기 때문에 Member는 Team을 �
 이 코드는 Address를 조회의 시작점으로 생성한 JPQL이다. 그러나  
 <img width="670" alt="스크린샷 2023-08-20 오후 5 21 26" src="https://github.com/luke0408/study_for_jpa_basic/assets/87763333/83cc1017-d87c-4c4c-bf07-ca4f83206b67">  
 다음과 같은 오류가 발생했다.  
-왜냐하면 JPQL 자체가 "엔티티를 대상으로 쿼리"를 생성하는 것인데 임베디드 타입은 엔티티가 아니라 VO(Value Object) 즉, 값타입이기 때문에 애초에 JPQL에서 조회의 시작점으로 활용할 수 없다.  
-따라서 Order의 Address를 조회하려면 다음과 같이 조회해야 한다.  
+- 왜냐하면 JPQL 자체가 "엔티티를 대상으로 쿼리"를 생성하는 것인데 임베디드 타입은 엔티티가 아니라 VO(Value Object) 즉, 값타입이기 때문에 애초에 JPQL에서 조회의 시작점으로 활용할 수 없다.  
+- 따라서 Order의 Address를 조회하려면 다음과 같이 조회해야 한다.
+
 ``` List<Address> address = em.createQuery("SELECT a address From Order o", Address.class).getResultList();```  
 
 <img width="297" alt="스크린샷 2023-08-20 오후 5 23 02" src="https://github.com/luke0408/study_for_jpa_basic/assets/87763333/b54b9d35-72bf-483e-93ec-ca89015076e9">  
+
 그럼 다음과 같이 조회가 잘 되는 것을 확인할 수 있다.  
 
 ### 스칼라 타입 프로젝션  
@@ -115,9 +149,3 @@ System.out.println("memberDTO = " + memberDTO.getAge());
 - SELECT 절에 패키지 명을 포함하여 전체 클래스 명을 입력한다.
 - 순서와 타입이 일치하는 생성자가 필요하다.
 - 패키지명을 작성해야 하는 불편함은 QueryDSL을 사용하여 극복할 수 있다.
-
-### DISTINCT로 중복 제거  
----
-```em.createQuery("select distinct m.username, m.age from Member m").getResultList();```  
-
-- SELECT 다음에 DISTINCT 키워드를 넣어주면 된다.
