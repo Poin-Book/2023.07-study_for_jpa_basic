@@ -39,10 +39,7 @@
                xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
       <persistence-unit name="hello">
           <properties>
-              <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
-              <property name="javax.persistence.jdbc.user" value="sa"/>
-              <property name="javax.persistence.jdbc.password" value=""/>
-              <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/test"/>
+              ...
               <property name="hibernate.dialect" value="dialect.MyH2Dialect"/>
               
               ...
