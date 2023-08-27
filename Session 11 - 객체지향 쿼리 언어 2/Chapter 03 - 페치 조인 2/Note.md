@@ -44,7 +44,7 @@
     WARN: HHH000104: firstResult/maxResults specified with collection fetch; applying in memory!
     ```
   - 해결 방안
-    1) 멤버 엔티티로 팀을 조회
+  1) 멤버 엔티티로 팀을 조회
       ```java
       String query = "select m From JpqlMember m join fetch m.team t";
       List<JpqlTeam> teamList = em.createQuery(query, JpqlTeam.class)
@@ -52,8 +52,8 @@
                                               .setMaxResults(1)
                                               .getResultList();
       ```
-    2) fetch join을 제거하고, @BetchSize 어노테이션 사용 (N+1문제 x)
-      > @BatchSize
+  2) fetch join을 제거하고, @BetchSize 어노테이션 사용 (N+1문제 x)
+      > @ BatchSize
       - 여러 개의 프록시 객체를 조회할 때 WHERE 절이 같은 여러 개의 SELECT 쿼리들을 하나의 IN 쿼리로 만들어준다.
       - class, field, application 파일에 적용 가능
       - size는 IN 절에 들어갈 요소의 최대 갯수, 이 갯수가 넘어가게 되면 여러개의 IN 쿼리로 나누어 날린다.
@@ -68,6 +68,7 @@
       }
       ```
       ❗️상황에 따라 배치 사이즈를 다르게 설정해야 한다
+        
         https://velog.io/@joonghyun/SpringBoot-JPA-JPA-Batch-Size%EC%97%90-%EB%8C%80%ED%95%9C-%EA%B3%A0%EC%B0%B0
 ## 2. 페치 조인의 특징과 한계
 - fetch join은 연관된 엔티티들을 SQL 한 번으로 조회 - 성능 최적화.
