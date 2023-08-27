@@ -29,9 +29,46 @@
     
 ### ❗️ 컬렉션을 페치 조인하면 페이징 API(setFirstResult, setMaxResults)를 사용할 수 없다.
   - 일대일, 다대일 같은 단일 값 연관 필드들은 페치 조인해도 페이징 가능
-    - 데이터 뻥튀기가 안 되기 때문 !
+  - 일대다, 다대다 관계에서는 데이터 뻥튀기 현상이 발생 할 수 있어 페이징 처리를 하면 정합성을 보장할 수 없다.
   - 하이버네이트는 경고 로그를 남기고 메모리에서 페이징(매우 위험)
-
+    ```java
+    String query = "select t From Team t join fetch t.members m";
+    
+    List<Team> teamList = em.createQuery(query, Team.class)
+                                .setFirstResult(0)
+                                .setMaxResults(1)
+                                .getResultList();
+    ```
+    ```log
+    org.hibernate.hql.internal.ast.QueryTranslatorImpl list
+    WARN: HHH000104: firstResult/maxResults specified with collection fetch; applying in memory!
+    ```
+  - 해결 방안
+    1) 멤버 엔티티로 팀을 조회
+      ```java
+      String query = "select m From JpqlMember m join fetch m.team t";
+      List<JpqlTeam> teamList = em.createQuery(query, JpqlTeam.class)
+                                              .setFirstResult(0)
+                                              .setMaxResults(1)
+                                              .getResultList();
+      ```
+    2) fetch join을 제거하고, @BetchSize 어노테이션 사용 (N+1문제 x)
+      > @BatchSize
+      - 여러 개의 프록시 객체를 조회할 때 WHERE 절이 같은 여러 개의 SELECT 쿼리들을 하나의 IN 쿼리로 만들어준다.
+      - class, field, application 파일에 적용 가능
+      - size는 IN 절에 들어갈 요소의 최대 갯수, 이 갯수가 넘어가게 되면 여러개의 IN 쿼리로 나누어 날린다.
+      ```java
+      @Entity
+      public class Team {
+          ...
+          @BatchSize(size = 100)
+          @OneToMany(mappedBy = "team")
+          private List<lMember> memberList = new ArrayList<>();
+          ...
+      }
+      ```
+      ❗️상황에 따라 배치 사이즈를 다르게 설정해야 한다
+        https://velog.io/@joonghyun/SpringBoot-JPA-JPA-Batch-Size%EC%97%90-%EB%8C%80%ED%95%9C-%EA%B3%A0%EC%B0%B0
 ## 2. 페치 조인의 특징과 한계
 - fetch join은 연관된 엔티티들을 SQL 한 번으로 조회 - 성능 최적화.
 - 엔티티에 직접 적용하는 글로벌 로딩 전략보다 우선함.
