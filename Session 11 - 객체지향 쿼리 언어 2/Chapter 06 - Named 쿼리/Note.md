@@ -45,10 +45,15 @@ List<Member> resultList =
 ```
 XML 정의가 항상 우선권을 가진다.  
 spring-data-jpa를 활용하게 되면 @Query를 사용하여 Repository에 Named 쿼리를 정의해서 사용한다.  
+```
+@Query("select u from User u where u.username = :username")
+List<User> findUser(@Param("username") String username);
+```
+
 ### Named Query 특징  
 ---
 - 미리 정의해서 이름을 부여해두고 사용하는 JPQL  
-- 정적 쿼리
+- 정적 쿼리(쿼리의 형태가 동일. 동적 쿼리는 파라미터에 따라 달라질 수 있는 (동적으로 바뀌는) 쿼리)  
 - 쿼리 재사용 가능  
 - 어노테이션, XML에 정의  
 - 애플리케이션 로딩 시점에 초기화 후 재사용
