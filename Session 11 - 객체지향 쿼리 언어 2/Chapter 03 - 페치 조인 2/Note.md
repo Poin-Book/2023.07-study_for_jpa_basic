@@ -28,19 +28,25 @@
     ex ) CASCADE와 같은 설정이 걸린 경우
   - 별칭이 필요한 유일한 때는 다음과 같이 추가 컬렉션을 재귀적으로 갖고올 때 뿐이다. 그 외는 x 
     ```sql
-    from Cat as cat
-     inner join fetch cat.mate
-     left join fetch cat.kittens child
-     left join fetch child.kittens
+    from Team t
+     inner join fetch t.members
+     left join fetch t.members m
+     left join fetch m.~
     ```
 
 ### ❗️ 둘 이상의 컬렉션은 페치 조인 할 수 없다.
   - 일대다의 경우 데이터 뻥튀기가 발생되는데,  둘 이상의 컬렉션에 패치 조인을 사용하게 되면 데이터 정합성에 문제가 발생할 수 있다.
+    ```java
+    String query = "select t From t join fetch t.members join fetch t.orders";
+     ```
+    - 둘 이상의 페치 조인을 이용해서 [1 : N : N] 형태로 쿼리를 조회하면 데이터가 뻥튀기 뿐 아니라 정합성 맞추기가 쉽지 않다.
 ![image](https://github.com/luke0408/study_for_jpa_basic/assets/85955988/1aa47d3c-9310-40d3-b9b3-fb561aae1432)
     
 ### ❗️ 컬렉션을 페치 조인하면 페이징 API(setFirstResult, setMaxResults)를 사용할 수 없다.
   - 일대일, 다대일 같은 단일 값 연관 필드들은 페치 조인해도 페이징 가능
   - 일대다, 다대다 관계에서는 데이터 뻥튀기 현상이 발생 할 수 있어 페이징 처리를 하면 정합성을 보장할 수 없다.
+    - join fetch와 distinct를 사용하면 가공한 결과값에서 페이징을 처리하기 때문에 팀A에 회원 1과 회원2 총 2명이 있다해도, 회원1만 있는것처럼 조회한다.
+    ![image](https://github.com/luke0408/study_for_jpa_basic/assets/85955988/f788089a-2c0f-4107-88b9-9b84e4aa343f)
   - 하이버네이트는 경고 로그를 남기고 메모리에서 페이징(매우 위험)
     ```java
     String query = "select t From Team t join fetch t.members m";
@@ -66,6 +72,8 @@
   2) fetch join을 제거하고, @BetchSize 어노테이션 사용 (N+1문제 x)
       > @ BatchSize
       - 여러 개의 프록시 객체를 조회할 때 WHERE 절이 같은 여러 개의 SELECT 쿼리들을 하나의 IN 쿼리로 만들어준다.
+      ![image](https://github.com/luke0408/study_for_jpa_basic/assets/85955988/1bd4eb44-93fd-457d-8045-1e5a699a03ff)
+
       - class, field, application 파일에 적용 가능
       - size는 IN 절에 들어갈 요소의 최대 갯수, 이 갯수가 넘어가게 되면 여러개의 IN 쿼리로 나누어 날린다.
       ```java
