@@ -23,6 +23,7 @@
   
 ![image](https://github.com/luke0408/study_for_jpa_basic/assets/74547868/5877c937-26a1-4db6-81ee-a6cef01eb48d)
 
+
 ### 2. 경로 표현식 특징
 - 상태 필드 → 경로 탐색의 끝, 그 이상 탐색이 불가함
         
