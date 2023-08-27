@@ -45,6 +45,41 @@
 ### ❗️ 컬렉션을 페치 조인하면 페이징 API(setFirstResult, setMaxResults)를 사용할 수 없다.
   - 일대일, 다대일 같은 단일 값 연관 필드들은 페치 조인해도 페이징 가능
   - 일대다, 다대다 관계에서는 데이터 뻥튀기 현상이 발생 할 수 있어 페이징 처리를 하면 정합성을 보장할 수 없다.
+    - 데이터가 적을때는 상관없지만 데이터가 많을 때 문제가 된다.
+      ex) Team이 100만개가 있으면, 100만개를 모두 메모리에 적재한 이후에 페이지를 조회하게 된다. 
+    ```log
+    Hibernate: 
+    /* select
+        t 
+    From
+        Team t 
+    join
+        fetch t.members m */ select
+            team0_.id as id1_5_0_,
+            members1_.id as id1_3_1_,
+            team0_.name as name2_5_0_,
+            members1_.age as age2_3_1_,
+            members1_.city as city3_3_1_,
+            members1_.street as street4_3_1_,
+            members1_.zipcode as zipcode5_3_1_,
+            members1_.name as name6_3_1_,
+            members1_.TEAM_ID as TEAM_ID9_3_1_,
+            members1_.endDate as endDate7_3_1_,
+            members1_.startDate as startDat8_3_1_,
+            members1_.TEAM_ID as TEAM_ID9_3_0__,
+            members1_.id as id1_3_0__ 
+        from
+            Team team0_ 
+        inner join
+            Member members1_ 
+                on team0_.id=members1_.TEAM_ID
+    
+    teamName=팀A,members=2
+    -> member = Member{id=3, name='회원1', age=0, team=Team{id=1, name='팀A'}}
+    -> member = Member{id=4, name='회원2', age=0, team=Team{id=1, name='팀A'}}
+    teamName=팀B,members=1
+    -> member = Member{id=5, name='회원3', age=0, team=Team{id=2, name='팀B'}}
+    ```
     - join fetch와 distinct를 사용하면 가공한 결과값에서 페이징을 처리하기 때문에 팀A에 회원 1과 회원2 총 2명이 있다해도, 회원1만 있는것처럼 조회한다.
     ![image](https://github.com/luke0408/study_for_jpa_basic/assets/85955988/f788089a-2c0f-4107-88b9-9b84e4aa343f)
   - 하이버네이트는 경고 로그를 남기고 메모리에서 페이징(매우 위험)
